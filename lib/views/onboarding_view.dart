@@ -1,10 +1,12 @@
-// lib/views/onboarding_view.dart
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../routes/app_routes.dart';
 import '../core/theme/app_colors.dart';
+import '../controllers/auth_controller.dart';
 
 class OnboardingView extends StatelessWidget {
+  final AuthController authController = Get.find<AuthController>();
+
   @override
   Widget build(BuildContext context) {
     final isDark = Get.isDarkMode;
@@ -104,7 +106,12 @@ class OnboardingView extends StatelessWidget {
                     ],
                   ),
                   child: ElevatedButton(
-                    onPressed: () => Get.toNamed(AppRoutes.login),
+                    onPressed: () async {
+                      // Mark onboarding as seen
+                      await authController.markOnboardingAsSeen();
+                      // Navigate to login
+                      Get.offAllNamed(AppRoutes.login);
+                    },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.transparent,
                       shadowColor: Colors.transparent,

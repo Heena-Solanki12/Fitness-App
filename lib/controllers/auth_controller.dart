@@ -42,7 +42,7 @@ class AuthController extends GetxController {
         // User is logged in
         print('✅ User is logged in, going to dashboard');
         await Future.delayed(Duration(seconds: 2)); // Wait for splash
-        Get.offAllNamed('/dashboard');
+        Get.offAllNamed('/home');
       } else {
         // User not logged in
         if (hasSeenOnboarding) {
@@ -126,7 +126,7 @@ class AuthController extends GetxController {
       isLoading.value = false;
 
       // Navigate to dashboard
-      Get.offAllNamed('/dashboard');
+      Get.offAllNamed('/home');
 
     } catch (e) {
       isLoading.value = false;
@@ -203,7 +203,7 @@ class AuthController extends GetxController {
       isLoading.value = false;
 
       // Navigate to dashboard
-      Get.offAllNamed('/dashboard');
+      Get.offAllNamed('/home');
 
     } catch (e) {
       isLoading.value = false;
@@ -287,7 +287,7 @@ class AuthController extends GetxController {
         borderRadius: 12,
       );
 
-      Get.offAllNamed('/dashboard');
+      Get.offAllNamed('/home');
 
     } catch (e) {
       print('❌ Profile completion error: $e');

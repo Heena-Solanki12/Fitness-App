@@ -1,4 +1,4 @@
-import 'package:fitness_app/models/workout_exercise.dart';
+import 'workout_exercise.dart';
 
 class Workout {
   final String id;

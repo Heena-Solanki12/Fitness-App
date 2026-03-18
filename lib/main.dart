@@ -1,37 +1,41 @@
+// lib/main.dart
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'controllers/auth_controller.dart';
+import 'controllers/theme_controller.dart';
 import 'routes/app_routes.dart';
 import 'core/theme/app_theme.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
   try {
     await Firebase.initializeApp();
-    print('✅ Firebase initialized');
   } catch (e) {
-    print('⚠️ Firebase initialization error: $e');
+    debugPrint('Firebase init error: $e');
   }
-
-  runApp(MyApp());
+  runApp(const FitFlowApp());
 }
 
-class MyApp extends StatelessWidget {
+class FitFlowApp extends StatelessWidget {
+  const FitFlowApp({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
+    // Register controllers first
+    final themeCtrl = Get.put(ThemeController(), permanent: true);
+    Get.put(AuthController(), permanent: true);
+
+    return Obx(() => GetMaterialApp(
       title: 'FitFlow',
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
-      themeMode: ThemeMode.system,
+      themeMode: themeCtrl.isDark.value ? ThemeMode.dark : ThemeMode.light,
       initialRoute: AppRoutes.splash,
       getPages: AppRoutes.pages,
-      initialBinding: BindingsBuilder(() {
-        Get.put(AuthController(), permanent: true);
-      }),
       debugShowCheckedModeBanner: false,
-    );
+    ));
   }
 }

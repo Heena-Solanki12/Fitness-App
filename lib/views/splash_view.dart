@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import '../core/theme/app_colors.dart';
 
 class SplashView extends StatefulWidget {
+  const SplashView({super.key});
   @override
   State<SplashView> createState() => _SplashViewState();
 }
